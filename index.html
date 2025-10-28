@@ -304,31 +304,6 @@ section{margin-bottom:6rem}
           </ul>
         </div>
       </div>
-
-      <div class="project-card">
-        <div class="project-image-placeholder">
-          <i class="fas fa-lock"></i>
-        </div>
-        <div class="project-content">
-          <h3 class="project-title">Authenticated File Storage System</h3>
-          <div class="project-tech">
-            <span class="tech-badge">Flask</span>
-            <span class="tech-badge">Python</span>
-            <span class="tech-badge">HTML/CSS</span>
-            <span class="tech-badge">JavaScript</span>
-            <span class="tech-badge">QR Codes</span>
-          </div>
-          <p class="project-description">
-            Secure web-based file storage and streaming service with user authentication, QR code generation, and file management capabilities.
-          </p>
-          <ul class="project-features">
-            <li>Implemented secure file upload and storage system</li>
-            <li>Built user authentication with session management</li>
-            <li>Integrated QR code generation for easy file sharing</li>
-            <li>Developed streaming functionality for media files</li>
-          </ul>
-        </div>
-      </div>
     </section>
 
     <section id="skills" class="skills-section">
@@ -685,8 +660,115 @@ section{margin-bottom:6rem}
   </main>
 
   <script>
-const t=document.querySelector('.mobile-menu-toggle'),s=document.querySelector('.sidebar'),l=document.querySelectorAll('.nav-link'),sec=document.querySelectorAll('section[id]');t.addEventListener('click',()=>{s.classList.toggle('active');t.classList.toggle('active')});l.forEach(n=>{n.addEventListener('click',e=>{e.preventDefault();const tgt=document.getElementById(n.getAttribute('href').substring(1));if(window.innerWidth<=768){s.classList.remove('active');t.classList.remove('active')}if(tgt)window.scrollTo({top:tgt.offsetTop-100,behavior:'smooth'})})});document.addEventListener('click',e=>{if(window.innerWidth<=768&&!s.contains(e.target)&&!t.contains(e.target)){s.classList.remove('active');t.classList.remove('active')}});function setActive(){const y=window.pageYOffset;sec.forEach(section=>{const top=section.offsetTop-150,h=section.offsetHeight,id=section.getAttribute('id'),link=document.querySelector(`.nav-link[href="#${id}"]`);if(y>top&&y<=top+h){l.forEach(ln=>ln.classList.remove('active'));if(link)link.classList.add('active')}})}window.addEventListener('scroll',setActive);setActive();const obs=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.opacity='1';entry.target.style.transform='translateY(0)'}})},{threshold:.1,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.timeline-item,.project-card,.skill-category,.cert-category,.education-card,.contact-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity .6s ease,transform .6s ease';obs.observe(el)});
-const track=document.getElementById('techTrack');let items=Array.from(track.children);items.forEach(item=>{const clone=item.cloneNode(true);track.appendChild(clone)});let pos=0;const speed=0.9;let paused=false;track.addEventListener('mouseenter',()=>paused=true);track.addEventListener('mouseleave',()=>paused=false);function animate(){if(!paused){pos-=speed;const itemWidth=items[0].offsetWidth+32;if(Math.abs(pos)>=itemWidth){pos+=itemWidth;track.appendChild(track.firstElementChild)}}track.style.transform=`translateX(${pos}px)`;requestAnimationFrame(animate)}animate();
+  const toggleButton = document.querySelector('.mobile-menu-toggle');
+  const sidebar = document.querySelector('.sidebar');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section[id]');
+
+  toggleButton.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+    toggleButton.classList.toggle('active');
+  });
+
+  navLinks.forEach(navLink => {
+    navLink.addEventListener('click', event => {
+      event.preventDefault();
+      const targetSection = document.getElementById(navLink.getAttribute('href').substring(1));
+
+      if (window.innerWidth <= 768) {
+        sidebar.classList.remove('active');
+        toggleButton.classList.remove('active');
+      }
+
+      if (targetSection) {
+        window.scrollTo({
+          top: targetSection.offsetTop - 100,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  document.addEventListener('click', event => {
+    if (window.innerWidth <= 768 && 
+        !sidebar.contains(event.target) && 
+        !toggleButton.contains(event.target)) {
+      sidebar.classList.remove('active');
+      toggleButton.classList.remove('active');
+    }
+  });
+
+  function setActive() {
+    const scrollY = window.pageYOffset;
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 150;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = section.getAttribute('id');
+      const correspondingLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+      
+      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        if (correspondingLink) {
+          correspondingLink.classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', setActive);
+  setActive();
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  document.querySelectorAll('.timeline-item, .project-card, .skill-category, .cert-category, .education-card, .contact-card').forEach(element => {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(20px)';
+    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(element);
+  });
+
+  const techTrack = document.getElementById('techTrack');
+  let techItems = Array.from(techTrack.children);
+
+  techItems.forEach(item => {
+    const clone = item.cloneNode(true);
+    techTrack.appendChild(clone);
+  });
+
+  let position = 0;
+  const scrollSpeed = 0.9;
+  let isPaused = false;
+
+  techTrack.addEventListener('mouseenter', () => isPaused = true);
+  techTrack.addEventListener('mouseleave', () => isPaused = false);
+
+  function animate() {
+    if (!isPaused) {
+      position -= scrollSpeed;
+      const itemWidth = techItems[0].offsetWidth + 32;
+      
+      if (Math.abs(position) >= itemWidth) {
+        position += itemWidth;
+        techTrack.appendChild(techTrack.firstElementChild);
+      }
+    }
+    
+    techTrack.style.transform = `translateX(${position}px)`;
+    requestAnimationFrame(animate);
+  }
+
+  animate();
   </script>
 </body>
 </html>
