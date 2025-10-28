@@ -11,7 +11,19 @@
 :root{--bg-primary:#0a0a0b;--bg-secondary:#151516;--bg-tertiary:#1a1a1b;--text-primary:#e4e4e7;--text-secondary:#a1a1aa;--accent-primary:#4d9d9d;--accent-secondary:#3d8080;--border-color:#27272a;--hover-bg:#1f1f20;--sidebar-width:280px}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background-color:var(--bg-primary);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background-color:var(--bg-primary);color:var(--text-primary);line-height:1.6;overflow-x:hidden;position:relative}
+
+/* Full Page Particle Background */
+#particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.3;
+  pointer-events: none;
+}
 
 /* Modern Custom Scrollbar Styling */
 * {
@@ -114,16 +126,133 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans
 .mobile-menu-toggle{position:fixed;top:1.5rem;left:1.5rem;width:40px;height:40px;background-color:var(--bg-secondary);border:1px solid var(--border-color);border-radius:8px;display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;z-index:1001;transition:all .3s ease}
 .mobile-menu-toggle span{width:20px;height:2px;background-color:var(--text-primary);transition:all .3s ease}
 .mobile-menu-toggle:hover{background-color:var(--hover-bg)}
-.main-content{margin-left:var(--sidebar-width);padding:4rem 6rem;max-width:1400px}
-.hero-section{padding:4rem 0;border-bottom:1px solid var(--border-color);margin-bottom:4rem}
-.hero-title{font-size:3.5rem;font-weight:700;margin-bottom:1rem;letter-spacing:-1px}
-.hero-location{display:flex;align-items:center;gap:.5rem;color:var(--text-secondary);margin-bottom:1.5rem}
-.hero-social{display:flex;gap:1rem;margin-bottom:2rem}
-.social-link{width:44px;height:44px;display:flex;align-items:center;justify-content:center;background-color:var(--bg-secondary);border:1px solid var(--border-color);border-radius:8px;color:var(--text-secondary);font-size:1.25rem;text-decoration:none;transition:all .2s ease}
-.social-link:hover{background-color:var(--accent-primary);border-color:var(--accent-primary);color:var(--bg-primary);transform:translateY(-2px)}
-.hero-description{font-size:1.125rem;line-height:1.8;color:var(--text-secondary);max-width:800px}
+.main-content{margin-left:var(--sidebar-width);padding:0 6rem 4rem;max-width:1400px;position:relative;z-index:1}
+
+/* Enhanced Hero Section */
+.hero-section{
+  position:relative;
+  padding:8rem 0 6rem;
+  border-bottom:1px solid var(--border-color);
+  margin-bottom:4rem;
+  overflow:hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title{
+  font-size:4rem;
+  font-weight:700;
+  margin-bottom:1rem;
+  letter-spacing:-1px;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Typing Animation Container */
+.hero-tagline {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--accent-primary);
+  margin-bottom: 1.5rem;
+  min-height: 2.5rem;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.typing-text {
+  border-right: 2px solid var(--accent-primary);
+  animation: blink 0.7s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--accent-primary); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-location{
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  color:var(--text-secondary);
+  margin-bottom:1.5rem;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.hero-social{
+  display:flex;
+  gap:1rem;
+  margin-bottom:2rem;
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.social-link{
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background-color:var(--bg-secondary);
+  border:1px solid var(--border-color);
+  border-radius:8px;
+  color:var(--text-secondary);
+  font-size:1.25rem;
+  text-decoration:none;
+  transition:all .3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.social-link::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  transition: width 0.4s, height 0.4s, top 0.4s, left 0.4s;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.social-link:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+.social-link:hover{
+  border-color:var(--accent-primary);
+  color:var(--bg-primary);
+  transform:translateY(-4px) scale(1.05);
+}
+
+.hero-description{
+  font-size:1.125rem;
+  line-height:1.8;
+  color:var(--text-secondary);
+  max-width:800px;
+  animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
 .section-title{font-size:2.5rem;font-weight:700;margin-bottom:3rem;letter-spacing:-.5px}
-section{margin-bottom:6rem}
+section{margin-bottom:6rem;position:relative;z-index:1}
 .tech-stack-marquee{position:relative;overflow:hidden;padding:2rem 0}
 .tech-stack-track{display:flex;gap:2rem;width:max-content}
 .tech-item{display:flex;flex-direction:column;align-items:center;gap:.75rem;min-width:100px;padding:1.5rem 1rem;background-color:var(--bg-secondary);border:1px solid var(--border-color);border-radius:12px;transition:all .3s ease}
@@ -134,16 +263,16 @@ section{margin-bottom:6rem}
 .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent-primary) 0%,transparent 100%)}
 .timeline-item{position:relative;margin-bottom:3rem}
 .timeline-dot{position:absolute;left:-2rem;top:.5rem;width:12px;height:12px;background-color:var(--accent-primary);border:3px solid var(--bg-primary);border-radius:50%;box-shadow:0 0 0 4px var(--bg-secondary)}
-.cert-category,.education-card,.expertise-card,.project-card,.skill-category,.timeline-content{background-color:var(--bg-secondary);border:1px solid var(--border-color);border-radius:12px;padding:2rem;transition:all .3s ease}
-.cert-category:hover,.education-card:hover,.expertise-card:hover,.project-card:hover,.skill-category:hover,.timeline-content:hover{border-color:var(--accent-primary);transform:translateY(-2px)}
+.cert-category,.education-card,.expertise-card,.project-card,.skill-category,.timeline-content,.process-card{background-color:var(--bg-secondary);border:1px solid var(--border-color);border-radius:12px;padding:2rem;transition:all .3s ease}
+.cert-category:hover,.education-card:hover,.expertise-card:hover,.project-card:hover,.skill-category:hover,.timeline-content:hover,.process-card:hover{border-color:var(--accent-primary);transform:translateY(-2px)}
 .education-header,.timeline-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;gap:1rem}
 .education-degree,.timeline-company{font-size:1.25rem;font-weight:600;color:var(--accent-primary);margin-bottom:.25rem}
 .education-school,.timeline-role{font-size:1.125rem;font-weight:600;color:var(--text-primary)}
 .cert-date,.education-date,.timeline-date{font-size:.875rem;color:var(--text-secondary);font-weight:500;white-space:nowrap}
-.education-description,.expertise-description,.project-description,.timeline-description{color:var(--text-secondary);line-height:1.7;margin-bottom:1rem}
-.project-features,.timeline-list{list-style:none;padding:0;margin:0}
-.project-features li,.timeline-list li{position:relative;padding-left:1.5rem;margin-bottom:.5rem;color:var(--text-secondary);font-size:.95rem}
-.project-features li::before,.timeline-list li::before{content:'•';position:absolute;left:0;color:var(--accent-primary);font-size:1.5rem;line-height:1}
+.education-description,.expertise-description,.project-description,.timeline-description,.process-description{color:var(--text-secondary);line-height:1.7;margin-bottom:1rem}
+.project-features,.timeline-list,.process-list{list-style:none;padding:0;margin:0}
+.project-features li,.timeline-list li,.process-list li{position:relative;padding-left:1.5rem;margin-bottom:.5rem;color:var(--text-secondary);font-size:.95rem}
+.project-features li::before,.timeline-list li::before,.process-list li::before{content:'•';position:absolute;left:0;color:var(--accent-primary);font-size:1.5rem;line-height:1}
 .project-card{display:grid;grid-template-columns:300px 1fr;gap:2rem;margin-bottom:2rem}
 .project-card:hover{transform:translateY(-4px)}
 .project-image-placeholder{width:100%;height:200px;background:linear-gradient(135deg,var(--bg-tertiary) 0%,var(--bg-primary) 100%);display:flex;align-items:center;justify-content:center;border:1px solid var(--border-color);border-radius:8px}
@@ -157,9 +286,9 @@ section{margin-bottom:6rem}
 .contact-grid,.skills-grid{display:grid;gap:1.5rem}
 .skills-grid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
 .contact-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.cert-category-title,.skill-category-title{display:flex;align-items:center;gap:.75rem;font-size:1.125rem;font-weight:600;margin-bottom:1.25rem}
+.cert-category-title,.skill-category-title,.process-step-title{display:flex;align-items:center;gap:.75rem;font-size:1.125rem;font-weight:600;margin-bottom:1.25rem}
 .cert-category-title{font-size:1.5rem;gap:1rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:2px solid var(--border-color)}
-.cert-category-title i,.expertise-icon i,.skill-category-title i{color:var(--accent-primary);font-size:1.5rem}
+.cert-category-title i,.expertise-icon i,.skill-category-title i,.process-step-icon i{color:var(--accent-primary);font-size:1.5rem}
 .cert-category-title i{font-size:1.75rem}
 .cert-category{margin-bottom:2rem}
 .cert-list{display:flex;flex-direction:column;gap:1rem}
@@ -178,7 +307,17 @@ section{margin-bottom:6rem}
 .contact-card span{overflow-wrap:break-word;word-wrap:break-word}
 .contact-card:hover{border-color:var(--accent-primary);background-color:var(--bg-tertiary);transform:translateY(-4px)}
 .contact-card i{font-size:1.5rem;color:var(--accent-primary);flex-shrink:0}
-.footer{padding:3rem 0;text-align:center;border-top:1px solid var(--border-color);color:var(--text-secondary);font-size:.9rem}
+.footer{padding:3rem 0;text-align:center;border-top:1px solid var(--border-color);color:var(--text-secondary);font-size:.9rem;position:relative;z-index:1}
+
+/* Process Section Styles */
+.process-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;margin-bottom:3rem}
+.process-card{display:flex;gap:1.5rem;height:100%}
+.process-step-icon{flex-shrink:0;width:50px;height:50px;display:flex;align-items:center;justify-content:center;background-color:var(--bg-tertiary);border:2px solid var(--accent-primary);border-radius:12px}
+.process-step-icon i{font-size:1.5rem}
+.process-content{flex:1}
+.process-step-title{font-size:1.25rem;margin-bottom:.75rem}
+.process-principles{background-color:var(--bg-secondary);border:1px solid var(--border-color);border-radius:12px;padding:2rem;margin-top:2rem}
+.process-principles h3{font-size:1.5rem;font-weight:600;margin-bottom:1.5rem;color:var(--accent-primary)}
 
 /* Modal Styles */
 .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.85);z-index:2000;opacity:0;transition:opacity .3s ease}
@@ -205,13 +344,25 @@ section{margin-bottom:6rem}
 .project-link:hover{background-color:var(--accent-primary);border-color:var(--accent-primary);color:var(--bg-primary);transform:translateY(-2px)}
 .project-link i{font-size:1rem}
 
-@media (max-width:1024px){.main-content{padding:4rem 3rem}.hero-title{font-size:2.75rem}.section-title{font-size:2rem}.project-card{grid-template-columns:1fr}.modal-container{width:95%;max-height:90vh}.modal-iframe{height:400px}}
+@media (max-width:1024px){
+  .main-content{padding:4rem 3rem}
+  .hero-title{font-size:2.75rem}
+  .hero-tagline{font-size:1.25rem}
+  .section-title{font-size:2rem}
+  .project-card{grid-template-columns:1fr}
+  .modal-container{width:95%;max-height:90vh}
+  .modal-iframe{height:400px}
+  .process-grid{grid-template-columns:1fr}
+}
+
 @media (max-width:768px){
   .sidebar{transform:translateX(-100%)}
   .sidebar.active{transform:translateX(0)}
   .mobile-menu-toggle{display:flex}
   .main-content{margin-left:0;padding:6rem 1.5rem 3rem}
+  .hero-section{padding:6rem 0 4rem}
   .hero-title{font-size:2.25rem}
+  .hero-tagline{font-size:1.125rem}
   .section-title{font-size:1.75rem}
   .timeline{padding-left:1.5rem}
   .timeline-dot{left:-1.75rem}
@@ -223,8 +374,8 @@ section{margin-bottom:6rem}
   .modal-header{padding:1.5rem}
   .modal-body{padding:1.5rem}
   .modal-iframe{height:300px}
+  .process-grid{grid-template-columns:1fr}
   
-  /* Mobile scrollbar adjustments */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -237,6 +388,9 @@ section{margin-bottom:6rem}
   </style>
 </head>
 <body>
+  <!-- Full Page Particle Background -->
+  <canvas id="particles-canvas"></canvas>
+
   <button class="mobile-menu-toggle" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
@@ -247,6 +401,7 @@ section{margin-bottom:6rem}
     </div>
     <nav class="sidebar-nav">
       <a href="#about" class="nav-link active">About</a>
+      <a href="#process" class="nav-link">How I Work</a>
       <a href="#experience" class="nav-link">Experience</a>
       <a href="#projects" class="nav-link">Projects</a>
       <a href="#skills" class="nav-link">Skills</a>
@@ -259,25 +414,30 @@ section{margin-bottom:6rem}
 
   <main class="main-content">
     <section id="about" class="hero-section">
-      <h1 class="hero-title">Daniel Chrobak</h1>
-      <div class="hero-location">
-        <i class="fas fa-map-marker-alt"></i>
-        <span>Chicago, IL</span>
+      <div class="hero-content">
+        <h1 class="hero-title">Daniel Chrobak</h1>
+        <div class="hero-tagline">
+          <span class="typing-text"></span>
+        </div>
+        <div class="hero-location">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Chicago, IL</span>
+        </div>
+        <div class="hero-social">
+          <a href="mailto:danielchrobak12@gmail.com" class="social-link" aria-label="Email">
+            <i class="fas fa-envelope"></i>
+          </a>
+          <a href="https://github.com/DanielChrobak" target="_blank" class="social-link" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://linkedin.com/in/danielchrobak12" target="_blank" class="social-link" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+        <p class="hero-description">
+          I'm a Full-Stack Developer and entrepreneur with expertise in web application development, wireless networking infrastructure, and embedded systems. I build and deploy commercial wireless solutions and create production-ready systems from concept to implementation.
+        </p>
       </div>
-      <div class="hero-social">
-        <a href="mailto:danielchrobak12@gmail.com" class="social-link" aria-label="Email">
-          <i class="fas fa-envelope"></i>
-        </a>
-        <a href="https://github.com/DanielChrobak" target="_blank" class="social-link" aria-label="GitHub">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://linkedin.com/in/danielchrobak12" target="_blank" class="social-link" aria-label="LinkedIn">
-          <i class="fab fa-linkedin"></i>
-        </a>
-      </div>
-      <p class="hero-description">
-        I'm a Full-Stack Developer and entrepreneur with expertise in web application development, wireless networking infrastructure, and embedded systems. I build and deploy commercial wireless solutions and create production-ready systems from concept to implementation.
-      </p>
     </section>
 
     <section class="tech-stack-section">
@@ -297,6 +457,103 @@ section{margin-bottom:6rem}
           <div class="tech-item"><i class="fab fa-git-alt"></i><span>Git</span></div>
           <div class="tech-item"><i class="fab fa-node-js"></i><span>Node.js</span></div>
         </div>
+      </div>
+    </section>
+
+    <section id="process" class="process-section">
+      <h2 class="section-title">How I Work</h2>
+      <p class="hero-description" style="margin-bottom:3rem">
+        My development approach is rooted in iterative problem-solving, thorough planning, and continuous learning. I believe in building robust, scalable solutions through systematic execution and thoughtful architecture.
+      </p>
+
+      <div class="process-grid">
+        <div class="process-card">
+          <div class="process-step-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <div class="process-content">
+            <h3 class="process-step-title">Requirements & Planning</h3>
+            <p class="process-description">
+              Every project begins with understanding the core problem and defining clear objectives. I break down complex requirements into manageable components, identify technical constraints, and create detailed implementation roadmaps before writing code.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-card">
+          <div class="process-step-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <div class="process-content">
+            <h3 class="process-step-title">Iterative Development</h3>
+            <p class="process-description">
+              I develop in small, testable increments using version control for every change. Each feature is built, tested, and refined before moving forward. This approach allows for rapid debugging and ensures stable progress throughout the project lifecycle.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-card">
+          <div class="process-step-icon">
+            <i class="fas fa-bug"></i>
+          </div>
+          <div class="process-content">
+            <h3 class="process-step-title">Debugging & Optimization</h3>
+            <p class="process-description">
+              When issues arise, I use systematic debugging techniques including console logging, breakpoint analysis, and isolating problem areas. I research similar problems, consult documentation, and leverage community resources to find efficient solutions.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-card">
+          <div class="process-step-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="process-content">
+            <h3 class="process-step-title">Testing & Quality Assurance</h3>
+            <p class="process-description">
+              Before deployment, I conduct comprehensive testing across different scenarios and edge cases. I validate functionality, verify database operations, check security implementations, and ensure responsive design across devices and browsers.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-card">
+          <div class="process-step-icon">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <div class="process-content">
+            <h3 class="process-step-title">Deployment & Monitoring</h3>
+            <p class="process-description">
+              I deploy applications to production environments with proper configuration management, implement monitoring systems for performance tracking, and maintain detailed documentation for future maintenance and updates.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-card">
+          <div class="process-step-icon">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <div class="process-content">
+            <h3 class="process-step-title">Documentation & Maintenance</h3>
+            <p class="process-description">
+              Throughout development, I maintain clear code comments, document API endpoints, and create user guides. Post-deployment, I monitor system performance, implement updates based on user feedback, and continuously refine the solution.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-principles">
+        <h3>Development Principles</h3>
+        <ul class="process-list">
+          <li>Write clean, maintainable code with meaningful variable names and consistent formatting</li>
+          <li>Use Git version control for every project with descriptive commit messages</li>
+          <li>Follow DRY (Don't Repeat Yourself) principles to reduce code duplication</li>
+          <li>Implement security best practices including input validation, password hashing, and SQL injection prevention</li>
+          <li>Design responsive interfaces that work seamlessly across desktop, tablet, and mobile devices</li>
+          <li>Optimize database queries and implement proper indexing for performance</li>
+          <li>Prioritize user experience with intuitive navigation and clear error messaging</li>
+          <li>Research extensively before implementation to understand best practices and potential pitfalls</li>
+          <li>Document technical decisions and maintain comprehensive project documentation</li>
+          <li>Stay current with technology trends and continuously expand technical skillset</li>
+        </ul>
       </div>
     </section>
 
@@ -880,6 +1137,137 @@ section{margin-bottom:6rem}
   </div>
 
   <script>
+  // Full Page Animated Particle Background
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = document.documentElement.scrollHeight;
+  }
+  
+  resizeCanvas();
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    initParticles();
+  });
+  
+  // Re-adjust canvas height when content changes
+  const resizeObserver = new ResizeObserver(() => {
+    canvas.height = document.documentElement.scrollHeight;
+  });
+  resizeObserver.observe(document.body);
+  
+  const particles = [];
+  const particleCount = 80;
+  
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.radius = Math.random() * 2 + 1;
+    }
+    
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      
+      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+    }
+    
+    draw() {
+      ctx.fillStyle = 'rgba(77, 157, 157, 0.6)';
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  
+  function initParticles() {
+    particles.length = 0;
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+  }
+  
+  initParticles();
+  
+  function connectParticles() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 120) {
+          ctx.strokeStyle = `rgba(77, 157, 157, ${0.2 * (1 - distance / 120)})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[j].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+  
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    particles.forEach(particle => {
+      particle.update();
+      particle.draw();
+    });
+    
+    connectParticles();
+    requestAnimationFrame(animateParticles);
+  }
+  
+  animateParticles();
+  
+  // Typing Animation
+  const phrases = [
+    'Building the future of wireless infrastructure',
+    'Full-Stack Developer & Entrepreneur',
+    'Creating production-ready solutions',
+    'From concept to deployment'
+  ];
+  
+  let phraseIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let typingSpeed = 100;
+  
+  function typeEffect() {
+    const typingElement = document.querySelector('.typing-text');
+    const currentPhrase = phrases[phraseIndex];
+    
+    if (isDeleting) {
+      typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+      charIndex--;
+      typingSpeed = 50;
+    } else {
+      typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+      charIndex++;
+      typingSpeed = 100;
+    }
+    
+    if (!isDeleting && charIndex === currentPhrase.length) {
+      setTimeout(() => { isDeleting = true; }, 2000);
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+    }
+    
+    setTimeout(typeEffect, typingSpeed);
+  }
+  
+  setTimeout(typeEffect, 500);
+
+  // Navigation and Sidebar
   const toggleButton = document.querySelector('.mobile-menu-toggle');
   const sidebar = document.querySelector('.sidebar');
   const navLinks = document.querySelectorAll('.nav-link');
@@ -951,13 +1339,14 @@ section{margin-bottom:6rem}
     rootMargin: '0px 0px -50px 0px'
   });
 
-  document.querySelectorAll('.timeline-item, .project-card, .skill-category, .cert-category, .education-card, .contact-card').forEach(element => {
+  document.querySelectorAll('.timeline-item, .project-card, .skill-category, .cert-category, .education-card, .contact-card, .process-card').forEach(element => {
     element.style.opacity = '0';
     element.style.transform = 'translateY(20px)';
     element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(element);
   });
 
+  // Tech Stack Marquee
   const techTrack = document.getElementById('techTrack');
   let techItems = Array.from(techTrack.children);
 
@@ -1013,7 +1402,6 @@ section{margin-bottom:6rem}
     }
   }
 
-  // Close modal on Escape key
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       const activeModal = document.querySelector('.modal-overlay.active');
