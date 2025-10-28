@@ -86,8 +86,34 @@ section{margin-bottom:6rem}
 .contact-card:hover{border-color:var(--accent-primary);background-color:var(--bg-tertiary);transform:translateY(-4px)}
 .contact-card i{font-size:1.5rem;color:var(--accent-primary);flex-shrink:0}
 .footer{padding:3rem 0;text-align:center;border-top:1px solid var(--border-color);color:var(--text-secondary);font-size:.9rem}
-@media (max-width:1024px){.main-content{padding:4rem 3rem}.hero-title{font-size:2.75rem}.section-title{font-size:2rem}.project-card{grid-template-columns:1fr}}
-@media (max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.active{transform:translateX(0)}.mobile-menu-toggle{display:flex}.main-content{margin-left:0;padding:6rem 1.5rem 3rem}.hero-title{font-size:2.25rem}.section-title{font-size:1.75rem}.timeline{padding-left:1.5rem}.timeline-dot{left:-1.75rem}.education-header,.timeline-header{flex-direction:column}.contact-grid,.skills-grid{grid-template-columns:1fr}.cert-item{flex-direction:column;align-items:flex-start}.cert-verify{width:100%;justify-content:center}}
+
+/* Modal Styles */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.85);z-index:2000;opacity:0;transition:opacity .3s ease}
+.modal-overlay.active{display:flex;align-items:center;justify-content:center;opacity:1}
+.modal-container{background-color:var(--bg-secondary);border:1px solid var(--border-color);border-radius:16px;max-width:1000px;width:90%;max-height:85vh;overflow-y:auto;position:relative;transform:scale(0.9);transition:transform .3s ease;padding:0}
+.modal-overlay.active .modal-container{transform:scale(1)}
+.modal-header{position:sticky;top:0;background-color:var(--bg-secondary);border-bottom:1px solid var(--border-color);padding:2rem;display:flex;justify-content:space-between;align-items:center;z-index:10}
+.modal-title{font-size:1.75rem;font-weight:700;color:var(--accent-primary)}
+.modal-close{background:none;border:none;color:var(--text-secondary);font-size:2rem;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:all .2s ease}
+.modal-close:hover{background-color:var(--hover-bg);color:var(--text-primary)}
+.modal-body{padding:2rem}
+.modal-section{margin-bottom:2rem}
+.modal-section h3{font-size:1.25rem;font-weight:600;margin-bottom:1rem;color:var(--text-primary)}
+.modal-section p{color:var(--text-secondary);line-height:1.7;margin-bottom:1rem}
+.modal-section ul{list-style:none;padding:0}
+.modal-section ul li{position:relative;padding-left:1.5rem;margin-bottom:.75rem;color:var(--text-secondary)}
+.modal-section ul li::before{content:'•';position:absolute;left:0;color:var(--accent-primary);font-size:1.5rem;line-height:1}
+.modal-iframe-container{margin-top:1.5rem;border:1px solid var(--border-color);border-radius:8px;overflow:hidden}
+.modal-iframe{width:100%;height:500px;border:none}
+.expand-button{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.3rem;background-color:var(--accent-primary);color:var(--bg-primary);border:none;font-size:.875rem;font-weight:600;border-radius:8px;cursor:pointer;transition:all .2s ease;margin-top:1rem}
+.expand-button:hover{background-color:var(--accent-secondary);transform:translateY(-2px)}
+.expand-button i{font-size:1rem}
+.project-link{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.3rem;background-color:var(--bg-tertiary);color:var(--text-primary);text-decoration:none;font-size:.875rem;font-weight:600;border-radius:8px;border:1px solid var(--border-color);transition:all .2s ease;margin-top:1rem;margin-left:.5rem}
+.project-link:hover{background-color:var(--accent-primary);border-color:var(--accent-primary);color:var(--bg-primary);transform:translateY(-2px)}
+.project-link i{font-size:1rem}
+
+@media (max-width:1024px){.main-content{padding:4rem 3rem}.hero-title{font-size:2.75rem}.section-title{font-size:2rem}.project-card{grid-template-columns:1fr}.modal-container{width:95%;max-height:90vh}.modal-iframe{height:400px}}
+@media (max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.active{transform:translateX(0)}.mobile-menu-toggle{display:flex}.main-content{margin-left:0;padding:6rem 1.5rem 3rem}.hero-title{font-size:2.25rem}.section-title{font-size:1.75rem}.timeline{padding-left:1.5rem}.timeline-dot{left:-1.75rem}.education-header,.timeline-header{flex-direction:column}.contact-grid,.skills-grid{grid-template-columns:1fr}.cert-item{flex-direction:column;align-items:flex-start}.cert-verify{width:100%;justify-content:center}.modal-container{width:98%;max-height:95vh;border-radius:12px}.modal-header{padding:1.5rem}.modal-body{padding:1.5rem}.modal-iframe{height:300px}}
   </style>
 </head>
 <body>
@@ -174,9 +200,10 @@ section{margin-bottom:6rem}
               <li>Designed and deployed enterprise-grade wireless networks for commercial venues</li>
               <li>Developed custom Flask-based management dashboard for network monitoring and analytics</li>
               <li>Established partnerships with local businesses for wireless infrastructure deployment</li>
-              <li>Managed end-to-end technical operations including site surveys, installation, and maintenance</li>
-              <li>Created business outreach strategies and professional communication systems</li>
             </ul>
+            <button class="expand-button" onclick="openModal('wirelessRevenue')">
+              <i class="fas fa-expand-alt"></i> View Details
+            </button>
           </div>
         </div>
 
@@ -197,7 +224,6 @@ section{margin-bottom:6rem}
               <li>Configured and maintained Minecraft servers with custom mods and plugins</li>
               <li>Implemented automated backup systems and server monitoring solutions</li>
               <li>Developed Discord bot integrations for server management and user engagement</li>
-              <li>Managed server performance optimization and resource allocation</li>
             </ul>
           </div>
         </div>
@@ -219,7 +245,6 @@ section{margin-bottom:6rem}
               <li>Mentor developers on Arduino/ESP32 programming, sensor integration, and hardware troubleshooting</li>
               <li>Provide guidance on Flask web application development, database design, and deployment strategies</li>
               <li>Create and share technical documentation, code examples, and best practices for embedded systems</li>
-              <li>Facilitate knowledge sharing and collaborative problem-solving among community members</li>
             </ul>
           </div>
         </div>
@@ -250,8 +275,10 @@ section{margin-bottom:6rem}
             <li>Developed command-line interface for seamless GPU partition attachment to Hyper-V VMs</li>
             <li>Implemented hardware-agnostic GPU virtualization supporting consumer and professional GPUs</li>
             <li>Created user-friendly workflows for complex hypervisor GPU allocation tasks</li>
-            <li>Engineered solution bypassing traditional hardware and licensing restrictions</li>
           </ul>
+          <a href="https://github.com/DanielChrobak/Hyper-V-GPU-Partitioner" target="_blank" class="project-link">
+            <i class="fab fa-github"></i> View on GitHub
+          </a>
         </div>
       </div>
 
@@ -659,6 +686,74 @@ section{margin-bottom:6rem}
     </footer>
   </main>
 
+  <!-- Modal for Wireless Revenue Details -->
+  <div id="wirelessRevenueModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'wirelessRevenue')">
+    <div class="modal-container" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title">Wireless Revenue - Founder & Technical Lead</h2>
+        <button class="modal-close" onclick="closeModal('wirelessRevenue')" aria-label="Close modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3>Project Overview</h3>
+          <p>
+            Wireless Revenue is a wireless infrastructure deployment business I founded in 2025, specializing in providing commercial hotspot solutions to high-traffic venues across the Chicagoland area. The business combines technical expertise in networking with entrepreneurial skills to create passive income opportunities for venue owners.
+          </p>
+        </div>
+
+        <div class="modal-section">
+          <h3>Key Responsibilities & Achievements</h3>
+          <ul>
+            <li>Designed and deployed enterprise-grade wireless networks for commercial venues including bars, restaurants, and retail locations</li>
+            <li>Developed custom Flask-based management dashboard for real-time network monitoring, analytics, and performance tracking</li>
+            <li>Established strategic partnerships with local businesses by creating professional outreach campaigns and business proposals</li>
+            <li>Managed end-to-end technical operations including site surveys, equipment installation, configuration, and ongoing maintenance</li>
+            <li>Configured devices with optimized antenna configurations for maximum coverage and revenue generation</li>
+            <li>Created automated reporting systems to track device earnings, data usage, and network performance metrics</li>
+            <li>Implemented business development strategies including cold email campaigns, in-person networking, and partnership agreements</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <h3>Technical Stack</h3>
+          <ul>
+            <li><strong>Backend:</strong> Python Flask, SQLAlchemy, SQLite database</li>
+            <li><strong>Frontend:</strong> Bootstrap 5, JavaScript, HTML/CSS</li>
+            <li><strong>Networking:</strong> Network infrastructure, WiFi optimization, antenna configuration</li>
+            <li><strong>Tools:</strong> Git/GitHub, VS Code, PowerShell scripting</li>
+            <li><strong>Deployment:</strong> Self-hosted on personal server infrastructure with Cloudflare CDN</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <h3>Business Impact</h3>
+          <ul>
+            <li>Successfully deployed hotspots in multiple high-traffic commercial locations</li>
+            <li>Created passive revenue streams for partner venues while building personal business income</li>
+            <li>Developed scalable business model with potential for regional expansion</li>
+            <li>Gained practical experience in B2B sales, contract negotiation, and customer relationship management</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <h3>Live Dashboard Preview</h3>
+          <p>Below is an embedded preview of the Wireless Revenue management dashboard. The dashboard provides real-time monitoring, analytics, and partner management capabilities.</p>
+          <div class="modal-iframe-container">
+            <iframe 
+              src="https://wirelessrevenue.com" 
+              class="modal-iframe" 
+              title="Wireless Revenue Dashboard"
+              loading="lazy"
+              sandbox="allow-scripts allow-same-origin"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
   const toggleButton = document.querySelector('.mobile-menu-toggle');
   const sidebar = document.querySelector('.sidebar');
@@ -769,6 +864,40 @@ section{margin-bottom:6rem}
   }
 
   animate();
+
+  // Modal Functions
+  function openModal(modalId) {
+    const modal = document.getElementById(modalId + 'Modal');
+    if (modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeModal(modalId) {
+    const modal = document.getElementById(modalId + 'Modal');
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function closeModalOnOverlay(event, modalId) {
+    if (event.target.classList.contains('modal-overlay')) {
+      closeModal(modalId);
+    }
+  }
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      const activeModal = document.querySelector('.modal-overlay.active');
+      if (activeModal) {
+        activeModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+  });
   </script>
 </body>
 </html>
