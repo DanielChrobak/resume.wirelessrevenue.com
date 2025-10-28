@@ -302,7 +302,6 @@ section{margin-bottom:6rem;position:relative;z-index:1}
         <h3>Core Development Principles</h3>
         <ul>
           <li>Write clean, maintainable code with meaningful variable names and consistent formatting</li>
-          <li>Use Git version control for every project with descriptive commit messages</li>
           <li>Follow DRY (Don't Repeat Yourself) principles to reduce code duplication</li>
           <li>Implement security best practices including input validation, password hashing, and SQL injection prevention</li>
           <li>Design responsive interfaces that work seamlessly across desktop, tablet, and mobile devices</li>
@@ -854,21 +853,27 @@ section{margin-bottom:6rem;position:relative;z-index:1}
     }
     document.addEventListener('DOMContentLoaded', typeEffect);
 
-    // Tech stack marquee
+    // Tech stack marquee - FIXED VERSION
     const track = document.getElementById('techTrack');
     if (track) {
-      const clone = track.cloneNode(true);
-      track.parentElement.appendChild(clone);
+      const trackContent = track.innerHTML;
+      track.innerHTML = trackContent + trackContent; // Duplicate content within same element
+      
       let scrollPos = 0;
+      const scrollSpeed = 0.5;
+      
       function scrollMarquee() {
-        scrollPos += 0.5;
-        if (scrollPos >= track.offsetWidth) {
+        scrollPos += scrollSpeed;
+        const trackWidth = track.offsetWidth / 2; // Half width since content is duplicated
+        
+        if (scrollPos >= trackWidth) {
           scrollPos = 0;
         }
+        
         track.style.transform = `translateX(-${scrollPos}px)`;
-        clone.style.transform = `translateX(-${scrollPos}px)`;
         requestAnimationFrame(scrollMarquee);
       }
+      
       scrollMarquee();
     }
 
